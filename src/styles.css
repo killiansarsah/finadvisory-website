@@ -680,25 +680,7 @@ h1, h2, h3, h4 {
 }
 
 .hero-tagline-badge {
-  position: absolute;
-  right: clamp(16px, 3.5vw, 44px);
-  bottom: 16px;
-  z-index: 3;
-  color: #f7d983;
-  font-family: Georgia, serif;
-  font-style: italic;
-  font-size: 14px;
-  letter-spacing: 0.4px;
-  background: rgba(4, 26, 54, 0.72);
-  backdrop-filter: blur(4px);
-  padding: 6px 14px;
-  border-radius: var(--radius-sm);
-  border: 1px solid rgba(247, 217, 131, 0.3);
-}
-
-.tagline-sep {
-  margin: 0 8px;
-  color: #ffffff;
+  display: none !important;
 }
 
 /* ==========================================================================
@@ -1949,11 +1931,31 @@ h1, h2, h3, h4 {
 
 /* Consultation Modal Specifics */
 .consultation-modal-card {
-  max-width: 780px;
+  max-width: 640px;
+  width: 100%;
 }
 
 .modal-form-body {
-  padding: 0;
+  padding: 24px 28px;
+}
+
+.modal-consultation-form-wrap {
+  width: 100%;
+}
+
+.modal-inquiry-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal-form-body .reveal,
+.modal-form-body .reveal-left,
+.modal-form-body .reveal-right,
+.modal-form-body .reveal-stagger {
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
 }
 
 .modal-form-body .contact-section {
@@ -1965,7 +1967,7 @@ h1, h2, h3, h4 {
 }
 
 .modal-form-body .consultation-container {
-  padding: 24px 28px;
+  padding: 0;
 }
 
 .modal-form-body .consultation-split {
@@ -3036,9 +3038,7 @@ h1, h2, h3, h4 {
   }
 
   .hero-tagline-badge {
-    position: static;
-    margin: 14px var(--section-padding-x) 20px;
-    display: inline-block;
+    display: none !important;
   }
 
   .services-grid {

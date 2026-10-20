@@ -27,14 +27,7 @@ export function Hero({ onOpenContact }) {
             <button
               type="button"
               className="gold-btn hero-cta-btn"
-              onClick={() => {
-                if (onOpenContact) {
-                  onOpenContact();
-                } else {
-                  const el = document.getElementById('contact');
-                  el && el.scrollIntoView({ behavior: 'smooth' });
-                }
-              }}
+              onClick={() => onOpenContact && onOpenContact('General Advisory Consultation')}
             >
               <span>Get in Touch</span>
               <ArrowRight className="btn-arrow" size={17} />
@@ -57,7 +50,7 @@ export function Hero({ onOpenContact }) {
           </div>
         </div>
 
-        {/* Right Visual Column */}
+        {/* Right Visual Column — Clean image without duplicate tagline badge (already printed in gold on the photo) */}
         <div className="hero-visual-column reveal-right">
           <div className="hero-image-wrapper">
             <img

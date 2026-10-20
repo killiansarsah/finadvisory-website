@@ -55,7 +55,7 @@ export function Compliance({ onOpenContact }) {
             <button
               type="button"
               className="gold-btn-outline"
-              onClick={onOpenContact}
+              onClick={() => onOpenContact && onOpenContact('Regulatory & Statutory Compliance')}
             >
               Get Compliance Assessment
             </button>

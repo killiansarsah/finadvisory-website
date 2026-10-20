@@ -5,8 +5,16 @@ import { Contact } from './Contact';
 export function ConsultationModal({ isOpen, onClose, initialService }) {
   if (!isOpen) return null;
 
+  const isCompliance = initialService?.toLowerCase().includes('compliance');
+
   return (
-    <div className="modal-backdrop" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="consultation-modal-title">
+    <div
+      className="modal-backdrop"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="consultation-modal-title"
+    >
       <div className="modal-card consultation-modal-card" onClick={(e) => e.stopPropagation()}>
         <button
           type="button"
@@ -18,12 +26,18 @@ export function ConsultationModal({ isOpen, onClose, initialService }) {
         </button>
 
         <div className="modal-header">
-          <span className="section-kicker">ADVISORY INQUIRY</span>
+          <span className="section-kicker">
+            {isCompliance ? 'STATUTORY COMPLIANCE' : 'ADVISORY INQUIRY'}
+          </span>
           <h2 id="consultation-modal-title" className="modal-title">
-            Book an Advisory Consultation
+            {isCompliance
+              ? 'Request a Compliance Assessment'
+              : 'Book an Advisory Consultation'}
           </h2>
           <p className="modal-subtitle">
-            Connect with a senior partner at FinAdvisory Chartered Accountants in Accra, Ghana.
+            {isCompliance
+              ? 'Receive a comprehensive audit and statutory filing evaluation from certified chartered accountants in Accra, Ghana.'
+              : 'Connect directly with a senior partner at FinAdvisory Chartered Accountants in Accra, Ghana.'}
           </p>
         </div>
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   MessageCircle, Phone, Mail, MapPin, Send, CheckCircle2, Clock, ShieldCheck
 } from 'lucide-react';
@@ -17,6 +17,12 @@ export function Contact({ prefilledService = '', isModal = false, onClose }) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  useEffect(() => {
+    if (prefilledService) {
+      setFormData((prev) => ({ ...prev, serviceInterest: prefilledService }));
+    }
+  }, [prefilledService]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -31,6 +37,159 @@ export function Contact({ prefilledService = '', isModal = false, onClose }) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Dedicated Modal View (Clean, visible, without hidden wrapper hierarchy)
+  if (isModal) {
+    return (
+      <div className="modal-consultation-form-wrap">
+        {isSubmitted ? (
+          <div className="submission-success-state" role="status">
+            <CheckCircle2 size={52} className="success-icon" />
+            <h4>Inquiry Received Successfully</h4>
+            <p>
+              Thank you, <strong>{formData.fullName}</strong>. A FinAdvisory Chartered Accountant
+              will review your request regarding <strong>{formData.serviceInterest}</strong> and
+              contact you promptly via {formData.phone || formData.email}.
+            </p>
+            <button
+              type="button"
+              className="gold-btn small-btn"
+              onClick={() => {
+                setIsSubmitted(false);
+                setFormData({
+                  fullName: '',
+                  companyName: '',
+                  email: '',
+                  phone: '',
+                  serviceInterest: prefilledService || 'Audit & Assurance',
+                  message: ''
+                });
+                if (onClose) onClose();
+              }}
+            >
+              Close
+            </button>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="inquiry-form modal-inquiry-form" noValidate>
+            <div className="form-row-2">
+              <div className="form-group">
+                <label htmlFor="modal-fullName" className="form-label">
+                  Full Name <span className="req-star">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="modal-fullName"
+                  name="fullName"
+                  required
+                  placeholder="e.g. Kwame Mensah"
+                  value={formData.fullName}
+                  onChange={handleChange}
+                  className="form-input"
+                  autoFocus
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="modal-companyName" className="form-label">
+                  Company / Organization
+                </label>
+                <input
+                  type="text"
+                  id="modal-companyName"
+                  name="companyName"
+                  placeholder="e.g. GoldCoast Ventures Ltd"
+                  value={formData.companyName}
+                  onChange={handleChange}
+                  className="form-input"
+                />
+              </div>
+            </div>
+
+            <div className="form-row-2">
+              <div className="form-group">
+                <label htmlFor="modal-email" className="form-label">
+                  Email Address <span className="req-star">*</span>
+                </label>
+                <input
+                  type="email"
+                  id="modal-email"
+                  name="email"
+                  required
+                  placeholder="kwame@example.com"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="form-input"
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="modal-phone" className="form-label">
+                  Phone Number <span className="req-star">*</span>
+                </label>
+                <input
+                  type="tel"
+                  id="modal-phone"
+                  name="phone"
+                  required
+                  placeholder="024 XXX XXXX"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className="form-input"
+                />
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="modal-serviceInterest" className="form-label">
+                Primary Service / Assessment Need
+              </label>
+              <select
+                id="modal-serviceInterest"
+                name="serviceInterest"
+                value={formData.serviceInterest}
+                onChange={handleChange}
+                className="form-select"
+              >
+                <option value="Regulatory & Statutory Compliance">Regulatory &amp; Statutory Compliance Assessment</option>
+                <option value="GRA Corporate Tax & VAT Compliance">GRA Corporate Tax &amp; VAT Compliance</option>
+                <option value="Registrar-General (RGD) Annual Returns">Registrar-General (RGD) Annual Returns</option>
+                <option value="Audit & Assurance">Audit &amp; Assurance</option>
+                <option value="Accountancy">Accountancy</option>
+                <option value="Payroll Management">Payroll Management</option>
+                <option value="Tax Advisory">Tax Advisory</option>
+                <option value="Management Consultancy">Management Consultancy</option>
+                <option value="General Advisory Consultation">General Advisory Consultation</option>
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="modal-message" className="form-label">
+                How Can We Assist Your Business?
+              </label>
+              <textarea
+                id="modal-message"
+                name="message"
+                rows={3}
+                placeholder="Briefly describe your statutory filing, compliance, audit, or advisory needs..."
+                value={formData.message}
+                onChange={handleChange}
+                className="form-textarea"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="gold-btn full-width-btn"
+            >
+              <span>{isSubmitting ? 'Submitting Inquiry...' : 'Submit Request'}</span>
+              <Send size={15} />
+            </button>
+          </form>
+        )}
+      </div>
+    );
+  }
+
+  // Standard Page Section View (for Homepage and Contact Page)
   return (
     <section className="contact-section" id="contact" aria-labelledby="contact-heading">
       {/* 4-Part Executive Horizontal Banner matching Reference Image */}
