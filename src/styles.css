@@ -579,13 +579,36 @@ h1, h2, h3, h4 {
 .hero-title {
   font-size: clamp(28px, 3.4vw, 46px);
   color: #ffffff;
-  line-height: 1.1;
+  line-height: 1.15;
   margin-bottom: 16px;
   letter-spacing: -0.6px;
 }
 
+/* Dynamic Typewriter Subheadline with Royal Ghanaian Gold Brilliance */
 .hero-title-accent {
-  color: #ffffff;
+  display: inline;
+  color: var(--gold-400);
+  font-weight: 800;
+  text-shadow: 0 0 20px rgba(216, 173, 56, 0.45);
+}
+
+/* Glowing Gold Typewriter Cursor */
+.typing-cursor {
+  display: inline-block;
+  margin-left: 3px;
+  color: var(--gold-400);
+  font-weight: 300;
+  text-shadow: 0 0 10px rgba(216, 173, 56, 0.9);
+  animation: cursorBlink 0.85s step-start infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 
 .hero-description {
