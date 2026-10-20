@@ -233,20 +233,14 @@ export function Contact({ prefilledService = '', isModal = false, onClose }) {
           </div>
         </div>
 
-        {/* Block 4: Independence Arch Photo with Slogan */}
+        {/* Block 4: Independence Arch Photo — Clean image without duplicate text overlay */}
         <div className="contact-banner-col col-photo reveal-right">
           <img
             src="/images/footer-building.jpg"
-            alt="Independence Arch in Accra, Ghana"
+            alt="Independence Arch in Accra, Ghana — Supporting Ghana's Businesses, Building a Stronger Tomorrow"
             className="banner-arch-img"
             loading="lazy"
           />
-          <div className="banner-photo-scrim" />
-          <p className="banner-slogan">
-            Supporting Ghana’s <br />
-            Businesses. Building <br />
-            a Stronger Tomorrow.
-          </p>
         </div>
       </div>
 

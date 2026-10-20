@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import {
   MapPin, Phone, Mail, Linkedin, Facebook, ChevronDown, Menu, X, ArrowUpRight
 } from 'lucide-react';
@@ -8,6 +9,7 @@ export function Header({ onOpenContact, onSelectService }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,18 +19,30 @@ export function Header({ onOpenContact, onSelectService }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [menuOpen]);
+
   const closeMenu = () => {
     setMenuOpen(false);
     setActiveDropdown(null);
   };
 
-  const handleDropdownClick = (name) => {
-    setActiveDropdown(activeDropdown === name ? null : name);
+  const toggleDropdown = (name) => {
+    setActiveDropdown((prev) => (prev === name ? null : name));
   };
 
   return (
     <header className={`site-header ${isScrolled ? 'is-sticky' : ''}`} id="home">
-      {/* Top Utility Bar */}
+      {/* Top Utility Bar (Desktop only - completely hidden on mobile/tablet) */}
       <div className="topbar">
         <div className="topbar-inner">
           <div className="topbar-contact-items">
@@ -76,11 +90,12 @@ export function Header({ onOpenContact, onSelectService }) {
         </div>
       </div>
 
-      {/* Main Navigation */}
+      {/* Main Navigation Bar */}
       <div className="nav-container">
         <div className="nav-inner">
           <Logo />
 
+          {/* Mobile Hamburger Toggle Button */}
           <button
             type="button"
             className="mobile-toggle"
@@ -91,44 +106,97 @@ export function Header({ onOpenContact, onSelectService }) {
             {menuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
 
-          <nav className={`nav-menu ${menuOpen ? 'nav-menu-open' : ''}`} aria-label="Main Navigation">
+          {/* Dimmed backdrop when mobile menu is active */}
+          {menuOpen && (
+            <div
+              className="mobile-nav-backdrop"
+              onClick={closeMenu}
+              aria-hidden="true"
+            />
+          )}
+
+          {/* Navigation Menu / Mobile Drawer */}
+          <nav
+            className={`nav-menu ${menuOpen ? 'nav-menu-open' : ''}`}
+            aria-label="Main Navigation"
+          >
+            {/* Header inside mobile drawer */}
+            <div className="mobile-drawer-header">
+              <div className="mobile-drawer-brand">
+                <span className="beacon-core" />
+                <span className="mobile-drawer-title">FINADVISORY</span>
+              </div>
+              <button
+                type="button"
+                className="mobile-drawer-close"
+                onClick={closeMenu}
+                aria-label="Close navigation menu"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
             <ul className="nav-list">
               <li className="nav-item">
-                <a href="#home" className="nav-link active" onClick={closeMenu}>
+                <Link
+                  to="/"
+                  className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}
+                  onClick={closeMenu}
+                >
                   Home
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="#about" className="nav-link" onClick={closeMenu}>
-                  About Us
-                </a>
+                </Link>
               </li>
 
-              {/* Services with Dropdown */}
+              <li className="nav-item">
+                <Link
+                  to="/about"
+                  className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`}
+                  onClick={closeMenu}
+                >
+                  About Us
+                </Link>
+              </li>
+
+              {/* Services with Desktop Hover & Mobile Accordion */}
               <li
                 className={`nav-item has-dropdown ${activeDropdown === 'services' ? 'dropdown-open' : ''}`}
-                onMouseEnter={() => setActiveDropdown('services')}
-                onMouseLeave={() => setActiveDropdown(null)}
+                onMouseEnter={() => {
+                  if (window.innerWidth > 900) setActiveDropdown('services');
+                }}
+                onMouseLeave={() => {
+                  if (window.innerWidth > 900) setActiveDropdown(null);
+                }}
               >
-                <a
-                  href="#services"
-                  className="nav-link"
-                  onClick={(e) => {
-                    if (window.innerWidth <= 900) {
+                <div className="nav-link-split">
+                  <Link
+                    to="/services"
+                    className={`nav-link ${location.pathname === '/services' ? 'active' : ''}`}
+                    onClick={closeMenu}
+                  >
+                    Services
+                  </Link>
+                  <button
+                    type="button"
+                    className="dropdown-chevron-btn"
+                    onClick={(e) => {
                       e.preventDefault();
-                      handleDropdownClick('services');
-                    } else {
-                      closeMenu();
-                    }
-                  }}
-                >
-                  <span>Services</span>
-                  <ChevronDown className="chevron-icon" size={14} />
-                </a>
+                      e.stopPropagation();
+                      toggleDropdown('services');
+                    }}
+                    aria-label="Toggle Services sub-menu"
+                    aria-expanded={activeDropdown === 'services'}
+                  >
+                    <ChevronDown
+                      className={`chevron-icon ${activeDropdown === 'services' ? 'rotated' : ''}`}
+                      size={15}
+                    />
+                  </button>
+                </div>
+
                 <div className="dropdown-menu">
                   <div className="dropdown-grid">
-                    <a
-                      href="#services"
+                    <Link
+                      to="/services"
                       className="dropdown-item"
                       onClick={() => {
                         closeMenu();
@@ -136,10 +204,10 @@ export function Header({ onOpenContact, onSelectService }) {
                       }}
                     >
                       <strong>Audit &amp; Assurance</strong>
-                      <span>Independent statutory & internal reviews</span>
-                    </a>
-                    <a
-                      href="#services"
+                      <span>Independent statutory &amp; internal reviews</span>
+                    </Link>
+                    <Link
+                      to="/services"
                       className="dropdown-item"
                       onClick={() => {
                         closeMenu();
@@ -147,10 +215,10 @@ export function Header({ onOpenContact, onSelectService }) {
                       }}
                     >
                       <strong>Accountancy</strong>
-                      <span>Accurate books & periodic management accounts</span>
-                    </a>
-                    <a
-                      href="#services"
+                      <span>Accurate books &amp; periodic management accounts</span>
+                    </Link>
+                    <Link
+                      to="/services"
                       className="dropdown-item"
                       onClick={() => {
                         closeMenu();
@@ -158,10 +226,10 @@ export function Header({ onOpenContact, onSelectService }) {
                       }}
                     >
                       <strong>Payroll Management</strong>
-                      <span>Compliant SSNIT, PAYE & benefits processing</span>
-                    </a>
-                    <a
-                      href="#services"
+                      <span>Compliant SSNIT, PAYE &amp; benefits processing</span>
+                    </Link>
+                    <Link
+                      to="/services"
                       className="dropdown-item"
                       onClick={() => {
                         closeMenu();
@@ -169,10 +237,10 @@ export function Header({ onOpenContact, onSelectService }) {
                       }}
                     >
                       <strong>Tax Advisory</strong>
-                      <span>Corporate tax optimization & risk mitigation</span>
-                    </a>
-                    <a
-                      href="#services"
+                      <span>Corporate tax optimization &amp; risk mitigation</span>
+                    </Link>
+                    <Link
+                      to="/services"
                       className="dropdown-item"
                       onClick={() => {
                         closeMenu();
@@ -180,10 +248,10 @@ export function Header({ onOpenContact, onSelectService }) {
                       }}
                     >
                       <strong>Management Consultancy</strong>
-                      <span>Financial modeling & sustainable corporate growth</span>
-                    </a>
-                    <a
-                      href="#services"
+                      <span>Financial modeling &amp; sustainable corporate growth</span>
+                    </Link>
+                    <Link
+                      to="/services"
                       className="dropdown-item"
                       onClick={() => {
                         closeMenu();
@@ -191,93 +259,171 @@ export function Header({ onOpenContact, onSelectService }) {
                       }}
                     >
                       <strong>Regulatory &amp; Statutory Compliance</strong>
-                      <span>Ghana compliance oversight & authority filings</span>
-                    </a>
+                      <span>Ghana compliance oversight &amp; authority filings</span>
+                    </Link>
                   </div>
                 </div>
               </li>
 
-              {/* Compliance with Dropdown */}
+              {/* Compliance with Desktop Hover & Mobile Accordion */}
               <li
                 className={`nav-item has-dropdown ${activeDropdown === 'compliance' ? 'dropdown-open' : ''}`}
-                onMouseEnter={() => setActiveDropdown('compliance')}
-                onMouseLeave={() => setActiveDropdown(null)}
+                onMouseEnter={() => {
+                  if (window.innerWidth > 900) setActiveDropdown('compliance');
+                }}
+                onMouseLeave={() => {
+                  if (window.innerWidth > 900) setActiveDropdown(null);
+                }}
               >
-                <a
-                  href="#compliance"
-                  className="nav-link"
-                  onClick={(e) => {
-                    if (window.innerWidth <= 900) {
+                <div className="nav-link-split">
+                  <Link
+                    to="/compliance"
+                    className={`nav-link ${location.pathname === '/compliance' ? 'active' : ''}`}
+                    onClick={closeMenu}
+                  >
+                    Compliance
+                  </Link>
+                  <button
+                    type="button"
+                    className="dropdown-chevron-btn"
+                    onClick={(e) => {
                       e.preventDefault();
-                      handleDropdownClick('compliance');
-                    } else {
-                      closeMenu();
-                    }
-                  }}
-                >
-                  <span>Compliance</span>
-                  <ChevronDown className="chevron-icon" size={14} />
-                </a>
+                      e.stopPropagation();
+                      toggleDropdown('compliance');
+                    }}
+                    aria-label="Toggle Compliance sub-menu"
+                    aria-expanded={activeDropdown === 'compliance'}
+                  >
+                    <ChevronDown
+                      className={`chevron-icon ${activeDropdown === 'compliance' ? 'rotated' : ''}`}
+                      size={15}
+                    />
+                  </button>
+                </div>
+
                 <div className="dropdown-menu dropdown-compact">
-                  <a href="#compliance" className="dropdown-item" onClick={closeMenu}>
+                  <Link to="/compliance" className="dropdown-item" onClick={closeMenu}>
                     <strong>GRA Tax Filings</strong>
                     <span>Quarterly &amp; Annual Ghana Revenue Authority filings</span>
-                  </a>
-                  <a href="#compliance" className="dropdown-item" onClick={closeMenu}>
+                  </Link>
+                  <Link to="/compliance" className="dropdown-item" onClick={closeMenu}>
                     <strong>Registrar-General (RGD) Filings</strong>
                     <span>Annual returns &amp; statutory secretarial maintenance</span>
-                  </a>
-                  <a href="#compliance" className="dropdown-item" onClick={closeMenu}>
+                  </Link>
+                  <Link to="/compliance" className="dropdown-item" onClick={closeMenu}>
                     <strong>Why Partner with Us</strong>
                     <span>Ghana regulatory intelligence &amp; zero-penalty guarantee</span>
-                  </a>
+                  </Link>
                 </div>
               </li>
 
-              {/* Insights with Dropdown */}
+              {/* Insights with Desktop Hover & Mobile Accordion */}
               <li
                 className={`nav-item has-dropdown ${activeDropdown === 'insights' ? 'dropdown-open' : ''}`}
-                onMouseEnter={() => setActiveDropdown('insights')}
-                onMouseLeave={() => setActiveDropdown(null)}
+                onMouseEnter={() => {
+                  if (window.innerWidth > 900) setActiveDropdown('insights');
+                }}
+                onMouseLeave={() => {
+                  if (window.innerWidth > 900) setActiveDropdown(null);
+                }}
               >
-                <a
-                  href="#insights"
-                  className="nav-link"
-                  onClick={(e) => {
-                    if (window.innerWidth <= 900) {
+                <div className="nav-link-split">
+                  <Link
+                    to="/insights"
+                    className={`nav-link ${location.pathname === '/insights' ? 'active' : ''}`}
+                    onClick={closeMenu}
+                  >
+                    Insights
+                  </Link>
+                  <button
+                    type="button"
+                    className="dropdown-chevron-btn"
+                    onClick={(e) => {
                       e.preventDefault();
-                      handleDropdownClick('insights');
-                    } else {
-                      closeMenu();
-                    }
-                  }}
-                >
-                  <span>Insights</span>
-                  <ChevronDown className="chevron-icon" size={14} />
-                </a>
+                      e.stopPropagation();
+                      toggleDropdown('insights');
+                    }}
+                    aria-label="Toggle Insights sub-menu"
+                    aria-expanded={activeDropdown === 'insights'}
+                  >
+                    <ChevronDown
+                      className={`chevron-icon ${activeDropdown === 'insights' ? 'rotated' : ''}`}
+                      size={15}
+                    />
+                  </button>
+                </div>
+
                 <div className="dropdown-menu dropdown-compact">
-                  <a href="#insights" className="dropdown-item" onClick={closeMenu}>
+                  <Link to="/insights" className="dropdown-item" onClick={closeMenu}>
                     <strong>2025/2026 Ghana Tax Deadlines</strong>
                     <span>Key filing dates for Corporate Tax &amp; e-VAT</span>
-                  </a>
-                  <a href="#insights" className="dropdown-item" onClick={closeMenu}>
+                  </Link>
+                  <Link to="/insights" className="dropdown-item" onClick={closeMenu}>
                     <strong>RGD Annual Returns Guide</strong>
                     <span>Preventing company de-registration in Ghana</span>
-                  </a>
-                  <a href="#insights" className="dropdown-item" onClick={closeMenu}>
+                  </Link>
+                  <Link to="/insights" className="dropdown-item" onClick={closeMenu}>
                     <strong>Corporate Withholding Tax</strong>
                     <span>Compliance best practices for SMEs &amp; enterprises</span>
-                  </a>
+                  </Link>
                 </div>
               </li>
 
               <li className="nav-item">
-                <a href="#contact" className="nav-link" onClick={closeMenu}>
+                <Link
+                  to="/contact"
+                  className={`nav-link ${location.pathname === '/contact' ? 'active' : ''}`}
+                  onClick={closeMenu}
+                >
                   Contact
-                </a>
+                </Link>
               </li>
             </ul>
 
+            {/* Quick Contact Info inside Mobile Drawer (Mobile/Tablet only) */}
+            <div className="mobile-drawer-contact">
+              <span className="mobile-contact-title">Direct Inquiries</span>
+              <div className="mobile-contact-links">
+                <a href="tel:0243663994" className="mobile-contact-item">
+                  <Phone size={14} className="mobile-contact-icon" />
+                  <span>0243663994</span>
+                </a>
+                <a href="tel:0206768299" className="mobile-contact-item">
+                  <Phone size={14} className="mobile-contact-icon" />
+                  <span>0206768299</span>
+                </a>
+                <a href="mailto:info@finadvisorycc.com" className="mobile-contact-item">
+                  <Mail size={14} className="mobile-contact-icon" />
+                  <span>info@finadvisorycc.com</span>
+                </a>
+                <div className="mobile-contact-item">
+                  <MapPin size={14} className="mobile-contact-icon" />
+                  <span>Accra, Ghana</span>
+                </div>
+              </div>
+              <div className="mobile-drawer-socials">
+                <a
+                  href="https://linkedin.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="social-btn"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin size={15} />
+                </a>
+                <a
+                  href="https://facebook.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="social-btn"
+                  aria-label="Facebook"
+                >
+                  <Facebook size={15} />
+                </a>
+              </div>
+            </div>
+
+            {/* Request Consultation Button */}
             <div className="nav-cta-wrapper">
               <button
                 type="button"

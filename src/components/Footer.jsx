@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, ArrowUp, Shield } from 'lucide-react';
 import { Logo } from './Logo';
 
@@ -24,78 +25,67 @@ export function Footer({ onOpenContact, onSelectService, onOpenLegal }) {
             </div>
           </div>
 
-          {/* Column 2: Quick Links */}
+          {/* Column 2: Quick Links (2x2 Matrix Grid) */}
           <div className="footer-col col-links">
             <h3 className="footer-col-title">Quick Links</h3>
-            <ul className="footer-nav-list">
-              <li><a href="#home">Home</a></li>
-              <li><a href="#about">About Us</a></li>
-              <li><a href="#services">Services</a></li>
-              <li><a href="#compliance">Compliance</a></li>
-              <li><a href="#insights">Insights</a></li>
-              <li><a href="#contact">Contact</a></li>
+            <ul className="footer-nav-list footer-nav-2x2">
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/about">About Us</Link></li>
+              <li><Link to="/services">Services</Link></li>
+              <li><Link to="/compliance">Compliance</Link></li>
+              <li><Link to="/insights">Insights</Link></li>
+              <li><Link to="/contact">Contact</Link></li>
             </ul>
           </div>
 
-          {/* Column 3: Services Directory */}
+          {/* Column 3: Services Directory (2x2 Matrix Grid) */}
           <div className="footer-col col-services">
             <h3 className="footer-col-title">Services</h3>
-            <ul className="footer-nav-list">
+            <ul className="footer-nav-list footer-nav-2x2">
               <li>
-                <a
-                  href="#services"
+                <Link
+                  to="/services"
                   onClick={() => onSelectService && onSelectService('Audit & Assurance')}
                 >
                   Audit &amp; Assurance
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#services"
+                <Link
+                  to="/services"
                   onClick={() => onSelectService && onSelectService('Accountancy')}
                 >
                   Accountancy
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#services"
+                <Link
+                  to="/services"
                   onClick={() => onSelectService && onSelectService('Payroll Management')}
                 >
-                  Payroll Management
-                </a>
+                  Payroll
+                </Link>
               </li>
               <li>
-                <a
-                  href="#services"
+                <Link
+                  to="/services"
                   onClick={() => onSelectService && onSelectService('Tax Advisory')}
                 >
                   Tax Advisory
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#services"
+                <Link
+                  to="/services"
                   onClick={() => onSelectService && onSelectService('Management Consultancy')}
                 >
-                  Management Consultancy
-                </a>
+                  Consultancy
+                </Link>
               </li>
               <li>
-                <a
-                  href="#services"
-                  onClick={() => onSelectService && onSelectService('GRA Tax Filings')}
-                >
-                  GRA Tax Filings
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#services"
-                  onClick={() => onSelectService && onSelectService('RGD Filings')}
-                >
-                  RGD Filings
-                </a>
+                <Link to="/compliance">
+                  Compliance
+                </Link>
               </li>
             </ul>
           </div>
