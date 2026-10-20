@@ -57,27 +57,15 @@ export function Hero({ onOpenContact }) {
           </div>
         </div>
 
-        {/* Right Visual Column (Video Background with Fallback Poster) */}
+        {/* Right Visual Column */}
         <div className="hero-visual-column reveal-right">
           <div className="hero-image-wrapper">
-            <video
-              className="hero-desk-image hero-video-media"
-              autoPlay
-              loop
-              muted
-              playsInline
-              poster="/images/Audit-Tax-and-Advisory-Workspace.png"
-              aria-label="FinAdvisory Chartered Accountants executive workspace and financial advisory"
-            >
-              <source src="/videos/hero-background.mp4" type="video/mp4" />
-              {/* Fallback image if video is not supported or not yet added */}
-              <img
-                src="/images/Audit-Tax-and-Advisory-Workspace.png"
-                alt="FinAdvisory professional accounting desk with books on Audit, Tax, Advisory, Compliance, and Ghana flag"
-                className="hero-desk-image"
-                loading="eager"
-              />
-            </video>
+            <img
+              src="/images/Audit-Tax-and-Advisory-Workspace.png"
+              alt="FinAdvisory professional accounting desk with books on Audit, Tax, Advisory, Compliance, and Ghana flag"
+              className="hero-desk-image"
+              loading="eager"
+            />
             <div className="hero-image-overlay" />
           </div>
         </div>

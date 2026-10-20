@@ -665,21 +665,18 @@ h1, h2, h3, h4 {
   height: 100%;
 }
 
-.hero-desk-image,
-.hero-video-media {
+.hero-desk-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
-  display: block;
 }
 
 .hero-image-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, #052347 0%, rgba(5, 35, 71, 0.3) 25%, transparent 60%);
+  background: linear-gradient(90deg, #052347 0%, rgba(5, 35, 71, 0.25) 25%, transparent 60%);
   pointer-events: none;
-  z-index: 2;
 }
 
 .hero-tagline-badge {
