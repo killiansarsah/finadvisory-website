@@ -643,25 +643,35 @@ h1, h2, h3, h4 {
   letter-spacing: -0.6px;
 }
 
-/* Rotating Dynamic Title Accent */
+/* Dynamic Typewriter Subheadline with Gold Brilliance */
 .hero-title-accent {
   display: inline-block;
   color: var(--gold-400);
   background: linear-gradient(135deg, #fcebb1 0%, #d8ad38 50%, #c59b27 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   font-weight: 800;
+  min-height: 1.2em;
 }
 
-.hero-title-accent.fade-out {
-  opacity: 0;
-  transform: translateY(8px);
+/* Glowing Gold Typewriter Cursor */
+.typing-cursor {
+  display: inline-block;
+  margin-left: 3px;
+  -webkit-text-fill-color: var(--gold-400);
+  color: var(--gold-400);
+  font-weight: 300;
+  text-shadow: 0 0 8px rgba(216, 173, 56, 0.7);
+  animation: cursorBlink 0.9s step-start infinite;
 }
 
-.hero-title-accent.fade-in {
-  opacity: 1;
-  transform: translateY(0);
+@keyframes cursorBlink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 
 .hero-description {
@@ -796,127 +806,6 @@ h1, h2, h3, h4 {
   background: linear-gradient(90deg, #052347 0%, rgba(5, 35, 71, 0.25) 25%, transparent 60%);
   pointer-events: none;
   z-index: 1;
-}
-
-/* Floating Glassmorphic Live Metric Cards */
-.hero-float-card {
-  position: absolute;
-  z-index: 5;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 16px;
-  background: rgba(3, 24, 51, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(216, 173, 56, 0.35);
-  border-radius: var(--radius-md);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-  user-select: none;
-}
-
-.hero-float-card:hover {
-  transform: translateY(-4px) scale(1.02);
-  border-color: var(--gold-400);
-  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-}
-
-.card-compliance {
-  top: 24px;
-  left: 24px;
-  animation: floatCard1 6s ease-in-out infinite alternate;
-}
-
-.card-advisory {
-  bottom: 28px;
-  right: 28px;
-  animation: floatCard2 7s ease-in-out infinite alternate;
-  animation-delay: 1.5s;
-}
-
-@keyframes floatCard1 {
-  0% {
-    transform: translateY(0px);
-  }
-  100% {
-    transform: translateY(-8px);
-  }
-}
-
-@keyframes floatCard2 {
-  0% {
-    transform: translateY(0px);
-  }
-  100% {
-    transform: translateY(8px);
-  }
-}
-
-.float-icon-wrap {
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.icon-gold {
-  background: rgba(216, 173, 56, 0.16);
-  color: var(--gold-400);
-  border: 1px solid rgba(216, 173, 56, 0.35);
-}
-
-.icon-emerald {
-  background: rgba(16, 185, 129, 0.16);
-  color: #34d399;
-  border: 1px solid rgba(16, 185, 129, 0.35);
-}
-
-.float-card-content {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-.float-card-label {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  color: #a3b9d1;
-  font-weight: 600;
-  line-height: 1.2;
-}
-
-.float-card-val {
-  font-size: 12.5px;
-  font-weight: 700;
-  color: #ffffff;
-  letter-spacing: -0.2px;
-  line-height: 1.3;
-}
-
-.live-indicator-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #34d399;
-  margin-left: 4px;
-  box-shadow: 0 0 8px rgba(52, 211, 153, 0.9);
-  animation: liveBlink 1.8s ease-in-out infinite;
-}
-
-@keyframes liveBlink {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.35;
-    transform: scale(0.8);
-  }
 }
 
 /* Keep printed motto clean on the photo */
@@ -3275,35 +3164,7 @@ h1, h2, h3, h4 {
   }
 
   .hero-visual-column {
-    min-height: 300px;
-  }
-
-  .hero-float-card {
-    padding: 7px 11px;
-    gap: 8px;
-  }
-
-  .float-icon-wrap {
-    width: 28px;
-    height: 28px;
-  }
-
-  .float-card-label {
-    font-size: 8.5px;
-  }
-
-  .float-card-val {
-    font-size: 11px;
-  }
-
-  .card-compliance {
-    top: 12px;
-    left: 12px;
-  }
-
-  .card-advisory {
-    bottom: 12px;
-    right: 12px;
+    min-height: 280px;
   }
 
   .hero-tagline-badge {

@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  ArrowRight, ShieldCheck, Award, TrendingUp, CheckCircle2
-} from 'lucide-react';
+import { ArrowRight, ShieldCheck, Award } from 'lucide-react';
 
 const rotatingPhrases = [
   'Financial Excellence',
@@ -12,24 +10,45 @@ const rotatingPhrases = [
 ];
 
 export function Hero({ onOpenContact }) {
+  const [displayText, setDisplayText] = useState('');
   const [phraseIndex, setPhraseIndex] = useState(0);
-  const [fadeState, setFadeState] = useState('fade-in');
+  const [isDeleting, setIsDeleting] = useState(false);
   const heroRef = useRef(null);
 
-  // Smooth rotation for core competencies
+  // Live typewriter effect for core competencies
   useEffect(() => {
-    const interval = setInterval(() => {
-      setFadeState('fade-out');
-      setTimeout(() => {
+    const currentPhrase = rotatingPhrases[phraseIndex];
+    let timeout;
+
+    if (!isDeleting) {
+      // Typing forward
+      if (displayText.length < currentPhrase.length) {
+        timeout = setTimeout(() => {
+          setDisplayText(currentPhrase.slice(0, displayText.length + 1));
+        }, 90);
+      } else {
+        // Completed phrase — pause to allow reading
+        timeout = setTimeout(() => {
+          setIsDeleting(true);
+        }, 2200);
+      }
+    } else {
+      // Backspacing
+      if (displayText.length > 0) {
+        timeout = setTimeout(() => {
+          setDisplayText(currentPhrase.slice(0, displayText.length - 1));
+        }, 45);
+      } else {
+        // Fully erased — move to next phrase
+        setIsDeleting(false);
         setPhraseIndex((prev) => (prev + 1) % rotatingPhrases.length);
-        setFadeState('fade-in');
-      }, 350);
-    }, 3600);
+      }
+    }
 
-    return () => clearInterval(interval);
-  }, []);
+    return () => clearTimeout(timeout);
+  }, [displayText, isDeleting, phraseIndex]);
 
-  // Subtle interactive mouse spotlight effect
+  // Interactive mouse spotlight effect
   const handleMouseMove = (e) => {
     if (!heroRef.current) return;
     const rect = heroRef.current.getBoundingClientRect();
@@ -65,8 +84,9 @@ export function Hero({ onOpenContact }) {
 
           <h1 className="hero-title">
             Your Trusted Partner <br />
-            <span className={`hero-title-accent ${fadeState}`}>
-              in {rotatingPhrases[phraseIndex]}
+            <span className="hero-title-accent">
+              in {displayText}
+              <span className="typing-cursor" aria-hidden="true">|</span>
             </span>
           </h1>
 
@@ -102,7 +122,7 @@ export function Hero({ onOpenContact }) {
           </div>
         </div>
 
-        {/* Right Visual Column — Cinematic breathing zoom + floating live glassmorphism cards */}
+        {/* Right Visual Column — Clean workspace photo with cinematic slow breathe & light sheen sweep */}
         <div className="hero-visual-column reveal-right">
           <div className="hero-image-wrapper">
             <img
@@ -113,29 +133,6 @@ export function Hero({ onOpenContact }) {
             />
             <div className="hero-image-overlay" />
             <div className="hero-image-sheen" />
-
-            {/* Floating Glassmorphic Live Card 1: Compliance Guarantee */}
-            <div className="hero-float-card card-compliance">
-              <div className="float-icon-wrap icon-gold">
-                <CheckCircle2 size={18} />
-              </div>
-              <div className="float-card-content">
-                <span className="float-card-label">Statutory Guarantee</span>
-                <strong className="float-card-val">Zero GRA &amp; RGD Penalties</strong>
-              </div>
-            </div>
-
-            {/* Floating Glassmorphic Live Card 2: Track Record Metric */}
-            <div className="hero-float-card card-advisory">
-              <div className="float-icon-wrap icon-emerald">
-                <TrendingUp size={18} />
-              </div>
-              <div className="float-card-content">
-                <span className="float-card-label">Track Record</span>
-                <strong className="float-card-val">GH¢ 150M+ Asset Audits</strong>
-              </div>
-              <span className="live-indicator-dot" title="Active Portfolio" />
-            </div>
           </div>
         </div>
       </div>
