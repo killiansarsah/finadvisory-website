@@ -125,7 +125,7 @@ export function CompliancePage({ onOpenContact }) {
         <div className="authority-showcase-box">
           <div className="showcase-img-wrap">
             <img
-              src="/images/Ghana-Government-Authority-Logos.png"
+              src="/images/Ghana-Government-Authority-Logos.jpg"
               alt="Ghana Revenue Authority and Registrar-General's Department Republic of Ghana"
               className="showcase-logos-img"
             />

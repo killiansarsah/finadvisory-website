@@ -84,10 +84,8 @@ export function Hero({ onOpenContact }) {
 
           <h1 className="hero-title">
             Your Trusted Partner <br />
-            <span className="hero-title-accent">
-              in {displayText}
-              <span className="typing-cursor" aria-hidden="true">|</span>
-            </span>
+            in <span className="hero-title-accent">{displayText}</span>
+            <span className="typing-cursor" aria-hidden="true">|</span>
           </h1>
 
           <p className="hero-description">
@@ -126,10 +124,12 @@ export function Hero({ onOpenContact }) {
         <div className="hero-visual-column reveal-right">
           <div className="hero-image-wrapper">
             <img
-              src="/images/Audit-Tax-and-Advisory-Workspace.png"
+              src="/images/Audit-Tax-and-Advisory-Workspace.jpg"
               alt="FinAdvisory professional accounting desk with books on Audit, Tax, Advisory, Compliance, and Ghana flag"
               className="hero-desk-image hero-cinematic-zoom"
               loading="eager"
+              width="1440"
+              height="810"
             />
             <div className="hero-image-overlay" />
             <div className="hero-image-sheen" />

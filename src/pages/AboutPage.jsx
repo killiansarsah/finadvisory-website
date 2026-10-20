@@ -68,7 +68,7 @@ export function AboutPage({ onOpenContact }) {
           <div className="about-depth-visual">
             <div className="office-photo-frame">
               <img
-                src="/images/Modern-FinAdvisory-Reception-Lobby.png"
+                src="/images/Modern-FinAdvisory-Reception-Lobby.jpg"
                 alt="FinAdvisory modern executive office in East Legon Hills, Accra"
                 className="office-photo"
               />
