@@ -1,5 +1,6 @@
 import React from 'react';
-import { ArrowRight, ShieldCheck, Award, TrendingUp } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, ShieldCheck, Award } from 'lucide-react';
 
 export function Hero({ onOpenContact }) {
   return (
@@ -39,9 +40,9 @@ export function Hero({ onOpenContact }) {
               <ArrowRight className="btn-arrow" size={17} />
             </button>
 
-            <a href="#services" className="secondary-hero-btn">
+            <Link to="/services" className="secondary-hero-btn">
               Explore Our Services
-            </a>
+            </Link>
           </div>
 
           <div className="hero-stats-row">
@@ -56,25 +57,28 @@ export function Hero({ onOpenContact }) {
           </div>
         </div>
 
-        {/* Right Visual Column */}
+        {/* Right Visual Column (Video Background with Fallback Poster) */}
         <div className="hero-visual-column reveal-right">
           <div className="hero-image-wrapper">
-            <img
-              src="/images/hero-finance.jpg"
-              alt="FinAdvisory professional accounting desk with books on Audit, Tax, Advisory, Compliance, and Ghana flag"
-              className="hero-desk-image"
-              loading="eager"
-            />
+            <video
+              className="hero-desk-image hero-video-media"
+              autoPlay
+              loop
+              muted
+              playsInline
+              poster="/images/Audit-Tax-and-Advisory-Workspace.png"
+              aria-label="FinAdvisory Chartered Accountants executive workspace and financial advisory"
+            >
+              <source src="/videos/hero-background.mp4" type="video/mp4" />
+              {/* Fallback image if video is not supported or not yet added */}
+              <img
+                src="/images/Audit-Tax-and-Advisory-Workspace.png"
+                alt="FinAdvisory professional accounting desk with books on Audit, Tax, Advisory, Compliance, and Ghana flag"
+                className="hero-desk-image"
+                loading="eager"
+              />
+            </video>
             <div className="hero-image-overlay" />
-            
-            {/* Hallmark Tagline in bottom corner */}
-            <div className="hero-tagline-badge">
-              <span className="tagline-val">Accuracy</span>
-              <span className="tagline-sep">|</span>
-              <span className="tagline-val">Integrity</span>
-              <span className="tagline-sep">|</span>
-              <span className="tagline-val">Professionalism</span>
-            </div>
           </div>
         </div>
       </div>
