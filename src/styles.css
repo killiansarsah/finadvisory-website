@@ -518,6 +518,34 @@ h1, h2, h3, h4 {
   min-width: 260px;
 }
 
+.nav-link {
+  white-space: nowrap;
+}
+
+.nav-link-split {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.dropdown-chevron-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Hide mobile-only drawer elements on desktop */
+.mobile-nav-backdrop,
+.mobile-drawer-header,
+.mobile-drawer-contact {
+  display: none !important;
+}
+
 .mobile-toggle {
   display: none;
   color: var(--navy-900);
