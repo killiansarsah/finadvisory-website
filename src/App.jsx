@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { ScrollToTop } from './components/ScrollToTop';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
@@ -17,8 +17,23 @@ import { servicesData } from './components/Services';
 import { useScrollReveal } from './hooks/useScrollReveal';
 
 function AppContent() {
+  const location = useLocation();
+
   // Observes route changes and reveals on-screen and below-fold elements
   useScrollReveal();
+
+  // Dynamic Route-Specific SEO Titles
+  useEffect(() => {
+    const titles = {
+      '/': 'FinAdvisory | Chartered Accountants & Tax Advisory Firm in Ghana',
+      '/about': 'About Us | FinAdvisory Chartered Accountants Accra',
+      '/services': 'Audit, Tax & Accountancy Services | FinAdvisory Ghana',
+      '/compliance': 'GRA & Registrar-General Compliance | FinAdvisory Ghana',
+      '/insights': 'Tax & Regulatory Insights 2025/2026 | FinAdvisory Ghana',
+      '/contact': 'Request Consultation | FinAdvisory Chartered Accountants',
+    };
+    document.title = titles[location.pathname] || 'FinAdvisory Chartered Accountants';
+  }, [location.pathname]);
 
   const [selectedService, setSelectedService] = useState(null);
   const [selectedArticle, setSelectedArticle] = useState(null);
