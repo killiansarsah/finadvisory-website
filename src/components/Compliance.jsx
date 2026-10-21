@@ -75,7 +75,7 @@ export function Compliance({ onOpenContact }) {
               <div className="authority-entity-box">
                 <div className="entity-logo-frame">
                   <img
-                    src="/images/regulatory-logos.jpg"
+                    src="/images/Ghana-Government-Authority-Logos.jpg"
                     alt="Official Ghanaian Authorities: Ghana Revenue Authority and Registrar-General's Department"
                     className="authorities-composite-image"
                   />

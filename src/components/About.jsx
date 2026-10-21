@@ -11,7 +11,7 @@ export function About({ onOpenContact }) {
         <div className="about-image-column reveal-left">
           <div className="office-photo-frame">
             <img
-              src="/images/office-reception.jpg"
+              src="/images/Modern-FinAdvisory-Reception-Lobby.jpg"
               alt="FinAdvisory Chartered Accountants modern office reception in Accra, Ghana"
               className="office-photo"
               loading="lazy"
