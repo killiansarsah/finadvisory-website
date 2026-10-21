@@ -333,6 +333,10 @@ h1, h2, h3, h4 {
   box-shadow: 0 2px 14px rgba(4, 26, 54, 0.08);
 }
 
+.site-header.menu-open {
+  z-index: 999;
+}
+
 /* Top Utility Bar */
 .topbar {
   background: var(--navy-900);
@@ -550,10 +554,12 @@ h1, h2, h3, h4 {
 }
 
 /* Hide mobile-only drawer elements on desktop */
-.mobile-nav-backdrop,
-.mobile-drawer-header,
-.mobile-drawer-contact {
-  display: none !important;
+@media (min-width: 901px) {
+  .mobile-nav-backdrop,
+  .mobile-drawer-header,
+  .mobile-drawer-contact {
+    display: none !important;
+  }
 }
 
 .mobile-toggle {
@@ -3029,13 +3035,17 @@ h1, h2, h3, h4 {
   }
 
   .mobile-nav-backdrop {
-    display: block;
+    display: block !important;
     position: fixed;
     inset: 0;
+    width: 100vw;
+    height: 100vh;
     background: rgba(2, 18, 38, 0.65);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
-    z-index: 104;
+    z-index: 105;
+    cursor: pointer;
+    touch-action: manipulation;
     animation: fadeIn 0.25s ease forwards;
   }
 

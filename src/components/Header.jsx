@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
   MapPin, Phone, Mail, Linkedin, Facebook, ChevronDown, Menu, X, ArrowUpRight
@@ -10,6 +10,8 @@ export function Header({ onOpenContact, onSelectService }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const location = useLocation();
+  const navRef = useRef(null);
+  const toggleRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,6 +33,38 @@ export function Header({ onOpenContact, onSelectService }) {
     };
   }, [menuOpen]);
 
+  // Close mobile drawer on outside tap/click or Escape key
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const handleOutsideClick = (e) => {
+      // If tap/click is outside both the drawer and hamburger toggle button, close drawer
+      if (
+        navRef.current &&
+        !navRef.current.contains(e.target) &&
+        toggleRef.current &&
+        !toggleRef.current.contains(e.target)
+      ) {
+        closeMenu();
+      }
+    };
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        closeMenu();
+      }
+    };
+
+    // Use pointerdown so mobile touchscreens respond immediately without 300ms delay
+    document.addEventListener('pointerdown', handleOutsideClick);
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('pointerdown', handleOutsideClick);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [menuOpen]);
+
   const closeMenu = () => {
     setMenuOpen(false);
     setActiveDropdown(null);
@@ -41,7 +75,7 @@ export function Header({ onOpenContact, onSelectService }) {
   };
 
   return (
-    <header className={`site-header ${isScrolled ? 'is-sticky' : ''}`} id="home">
+    <header className={`site-header ${isScrolled ? 'is-sticky' : ''} ${menuOpen ? 'menu-open' : ''}`} id="home">
       {/* Top Utility Bar (Desktop only - completely hidden on mobile/tablet) */}
       <div className="topbar">
         <div className="topbar-inner">
@@ -93,10 +127,11 @@ export function Header({ onOpenContact, onSelectService }) {
       {/* Main Navigation Bar */}
       <div className="nav-container">
         <div className="nav-inner">
-          <Logo />
+          <Logo onClick={closeMenu} />
 
           {/* Mobile Hamburger Toggle Button */}
           <button
+            ref={toggleRef}
             type="button"
             className="mobile-toggle"
             onClick={() => setMenuOpen(!menuOpen)}
@@ -111,12 +146,14 @@ export function Header({ onOpenContact, onSelectService }) {
             <div
               className="mobile-nav-backdrop"
               onClick={closeMenu}
+              onTouchStart={closeMenu}
               aria-hidden="true"
             />
           )}
 
           {/* Navigation Menu / Mobile Drawer */}
           <nav
+            ref={navRef}
             className={`nav-menu ${menuOpen ? 'nav-menu-open' : ''}`}
             aria-label="Main Navigation"
           >
@@ -141,7 +178,10 @@ export function Header({ onOpenContact, onSelectService }) {
                 <Link
                   to="/"
                   className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}
-                  onClick={closeMenu}
+                  onClick={() => {
+                    closeMenu();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
                 >
                   Home
                 </Link>

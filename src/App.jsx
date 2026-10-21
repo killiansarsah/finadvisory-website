@@ -16,7 +16,8 @@ import { LegalModal } from './components/LegalModal';
 import { servicesData } from './components/Services';
 import { useScrollReveal } from './hooks/useScrollReveal';
 
-export default function App() {
+function AppContent() {
+  // Observes route changes and reveals on-screen and below-fold elements
   useScrollReveal();
 
   const [selectedService, setSelectedService] = useState(null);
@@ -38,92 +39,97 @@ export default function App() {
   };
 
   return (
-    <BrowserRouter>
-      <div className="finadvisory-app-root">
-        <ScrollToTop />
+    <div className="finadvisory-app-root">
+      <ScrollToTop />
 
-        {/* Global Multi-Page Header */}
-        <Header
-          onOpenContact={() => handleOpenContact()}
-          onSelectService={handleSelectServiceByName}
-        />
+      {/* Global Multi-Page Header */}
+      <Header
+        onOpenContact={() => handleOpenContact()}
+        onSelectService={handleSelectServiceByName}
+      />
 
-        {/* Multi-Page Route Views */}
-        <main id="main-content">
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <HomePage
-                  onOpenContact={() => handleOpenContact()}
-                  onSelectService={(service) => setSelectedService(service)}
-                  onSelectArticle={(article) => setSelectedArticle(article)}
-                />
-              }
-            />
-            <Route
-              path="/about"
-              element={<AboutPage onOpenContact={() => handleOpenContact()} />}
-            />
-            <Route
-              path="/services"
-              element={
-                <ServicesPage
-                  onOpenContact={(svcName) => handleOpenContact(svcName)}
-                  onSelectService={(service) => setSelectedService(service)}
-                />
-              }
-            />
-            <Route
-              path="/compliance"
-              element={<CompliancePage onOpenContact={() => handleOpenContact('Regulatory Compliance')} />}
-            />
-            <Route
-              path="/insights"
-              element={
-                <InsightsPage
-                  onSelectArticle={(article) => setSelectedArticle(article)}
-                  onOpenContact={() => handleOpenContact('General Tax Advisory')}
-                />
-              }
-            />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </main>
+      {/* Multi-Page Route Views */}
+      <main id="main-content">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <HomePage
+                onOpenContact={() => handleOpenContact()}
+                onSelectService={(service) => setSelectedService(service)}
+                onSelectArticle={(article) => setSelectedArticle(article)}
+              />
+            }
+          />
+          <Route
+            path="/about"
+            element={<AboutPage onOpenContact={() => handleOpenContact()} />}
+          />
+          <Route
+            path="/services"
+            element={
+              <ServicesPage
+                onOpenContact={(svcName) => handleOpenContact(svcName)}
+                onSelectService={(service) => setSelectedService(service)}
+              />
+            }
+          />
+          <Route
+            path="/compliance"
+            element={<CompliancePage onOpenContact={() => handleOpenContact('Regulatory Compliance')} />}
+          />
+          <Route
+            path="/insights"
+            element={
+              <InsightsPage
+                onSelectArticle={(article) => setSelectedArticle(article)}
+                onOpenContact={() => handleOpenContact('General Tax Advisory')}
+              />
+            }
+          />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </main>
 
-        {/* Global Multi-Page Footer */}
-        <Footer
-          onOpenContact={() => handleOpenContact()}
-          onSelectService={handleSelectServiceByName}
-          onOpenLegal={(type) => setActiveLegalModal(type)}
-        />
+      {/* Global Multi-Page Footer */}
+      <Footer
+        onOpenContact={() => handleOpenContact()}
+        onSelectService={handleSelectServiceByName}
+        onOpenLegal={(type) => setActiveLegalModal(type)}
+      />
 
-        {/* Reusable Modals & Dialogs */}
-        <ServiceModal
-          service={selectedService}
-          onClose={() => setSelectedService(null)}
-          onBookService={(title) => handleOpenContact(title)}
-        />
+      {/* Reusable Modals & Dialogs */}
+      <ServiceModal
+        service={selectedService}
+        onClose={() => setSelectedService(null)}
+        onBookService={(title) => handleOpenContact(title)}
+      />
 
-        <InsightModal
-          article={selectedArticle}
-          onClose={() => setSelectedArticle(null)}
-          onConsultationRequest={() => handleOpenContact('General Tax Advisory')}
-        />
+      <InsightModal
+        article={selectedArticle}
+        onClose={() => setSelectedArticle(null)}
+        onConsultationRequest={() => handleOpenContact('General Tax Advisory')}
+      />
 
-        <ConsultationModal
-          isOpen={isConsultationOpen}
-          onClose={() => setIsConsultationOpen(false)}
-          initialService={prefilledService}
-        />
+      <ConsultationModal
+        isOpen={isConsultationOpen}
+        onClose={() => setIsConsultationOpen(false)}
+        initialService={prefilledService}
+      />
 
-        <LegalModal
-          title={activeLegalModal}
-          onClose={() => setActiveLegalModal(null)}
-        />
-      </div>
-    </BrowserRouter>
+      <LegalModal
+        title={activeLegalModal}
+        onClose={() => setActiveLegalModal(null)}
+      />
+    </div>
   );
 }
 
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
+  );
+}
