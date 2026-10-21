@@ -43,7 +43,10 @@ export default function App() {
         <ScrollToTop />
 
         {/* Global Multi-Page Header */}
-        <Header onOpenContact={() => handleOpenContact()} />
+        <Header
+          onOpenContact={() => handleOpenContact()}
+          onSelectService={handleSelectServiceByName}
+        />
 
         {/* Multi-Page Route Views */}
         <main id="main-content">

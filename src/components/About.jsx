@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowRight, Check, Compass, Users2, ShieldAlert } from 'lucide-react';
 import { benefitsList } from './Compliance';
 
@@ -39,17 +40,13 @@ export function About({ onOpenContact }) {
           </p>
 
           <div className="about-action-row">
-            <button
-              type="button"
-              className="gold-btn small-btn"
-              onClick={onOpenContact}
-            >
+            <Link to="/about" className="gold-btn small-btn">
               <span>Learn More</span>
               <ArrowRight size={14} />
-            </button>
-            <a href="#compliance" className="text-link-subtle">
+            </Link>
+            <Link to="/compliance" className="text-link-subtle">
               <span>View Regulatory Accreditations</span>
-            </a>
+            </Link>
           </div>
         </div>
 
