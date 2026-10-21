@@ -3489,18 +3489,42 @@ h1, h2, h3, h4 {
   }
 
   .hero-actions {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    flex-wrap: wrap;
+    width: auto;
+    margin-bottom: 20px;
   }
 
-  .hero-cta-btn,
-  .secondary-hero-btn {
-    width: 100%;
+  .hero-cta-btn {
+    width: auto;
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
-    text-align: center;
-    padding: 12px 20px;
+    padding: 9px 18px;
+    font-size: 12.5px;
+    font-weight: 700;
+    gap: 6px;
+    border-radius: var(--radius-sm);
+  }
+
+  .hero-cta-btn .btn-arrow {
+    width: 14px;
+    height: 14px;
+  }
+
+  .secondary-hero-btn {
+    width: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
   }
 
   .hero-stats-row {
@@ -3551,6 +3575,20 @@ h1, h2, h3, h4 {
 
   .hero-title {
     font-size: 22px;
+  }
+
+  .hero-actions {
+    gap: 8px;
+  }
+
+  .hero-cta-btn {
+    padding: 8px 14px;
+    font-size: 11.5px;
+  }
+
+  .secondary-hero-btn {
+    padding: 7px 12px;
+    font-size: 11px;
   }
 
   .footer-nav-2x2 {
