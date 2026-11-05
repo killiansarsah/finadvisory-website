@@ -264,7 +264,7 @@ export function Contact({ prefilledService = '', isModal = false, onClose }) {
                 <Clock className="perk-icon" size={18} />
                 <div>
                   <strong>Rapid Response Time</strong>
-                  <p>Our senior partners review and reply to inquiries within 2 business days.</p>
+                  <p>Our senior partners review and reply to inquiries within 2 business hours.</p>
                 </div>
               </div>
               <div className="perk-item">

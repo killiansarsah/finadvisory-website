@@ -61,7 +61,7 @@ export const servicesData = [
     deliverables: [
       'Corporate Income Tax (CIT) Strategic Planning',
       'Withholding Tax (WHT) Audits and Exemption Applications',
-      'Value Added Tax (VAT), NHIL & GETFund Advisory',
+      'Value Added Tax (VAT), NHIL, GETFund & COVID Levy Advisory',
       'Representation during GRA Audits & Tax Clearance Certificates (TCC)'
     ]
   },

@@ -23,7 +23,7 @@ export const insightsArticles = [
 
       <h3>2. Value Added Tax (VAT) & E-Invoicing (E-VAT)</h3>
       <p>The Ghana Revenue Authority (GRA) continues the mandatory integration of taxpayers onto the Certified Invoicing System. All registered VAT taxpayers must ensure their accounting software or point-of-sale systems communicate in real-time with the GRA Commissioner-General's server.</p>
-      <p>Monthly VAT returns, along with NHIL and GETFund, must be filed and paid no later than the last working day of the month following the accounting period.</p>
+      <p>Monthly VAT returns, along with NHIL, GETFund, and COVID-19 Health Recovery Levy, must be filed and paid no later than the last working day of the month following the accounting period.</p>
     `
   },
   {

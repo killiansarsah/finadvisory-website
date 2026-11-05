@@ -133,7 +133,7 @@ export function Footer({ onOpenContact, onSelectService, onOpenLegal }) {
         {/* Bottom Bar: Copyright and Legal */}
         <div className="footer-bottom-bar">
           <p className="footer-copyright">
-            &copy; 2026 FinAdvisory Chartered Accountants. All rights reserved.
+            &copy; 2025 FinAdvisory Chartered Accountants. All rights reserved.
           </p>
 
           <div className="footer-bottom-links">
