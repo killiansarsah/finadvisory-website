@@ -11,7 +11,7 @@ export function ContactPage() {
     email: '',
     phone: '',
     serviceInterest: 'Audit & Assurance',
-    urgency: 'Standard (Within 2 business hours)',
+    urgency: 'Standard (Within 2 business days)',
     message: ''
   });
 
@@ -86,7 +86,7 @@ export function ContactPage() {
                   <a href="mailto:info@finadvisorycc.com" className="channel-link">
                     info@finadvisorycc.com
                   </a>
-                  <small>Inquiries reviewed within 2 business hours</small>
+                  <small>Inquiries reviewed within 2 business days</small>
                 </div>
               </div>
 
@@ -265,7 +265,7 @@ export function ContactPage() {
                         className="form-select"
                       >
                         <option value="Urgent (Imminent GRA/RGD deadline)">Urgent (Imminent GRA/RGD deadline)</option>
-                        <option value="Standard (Within 2 business hours)">Standard (Within 2 business hours)</option>
+                        <option value="Standard (Within 2 business days)">Standard (Within 2 business days)</option>
                         <option value="Exploratory Consultation">Exploratory Consultation</option>
                       </select>
                     </div>

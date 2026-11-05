@@ -22,7 +22,7 @@ export function CompliancePage({ onOpenContact }) {
     {
       period: 'Monthly (Last Day)',
       body: 'Ghana Revenue Authority (GRA)',
-      obligation: 'Value Added Tax (VAT), NHIL, GETFund, COVID-19 Health Recovery Levy',
+      obligation: 'Value Added Tax (VAT), NHIL and GETFund returns',
       consequence: 'Automatic GHS 500 fixed fine + 125% policy rate interest'
     },
     {
@@ -87,7 +87,7 @@ export function CompliancePage({ onOpenContact }) {
               </p>
               <ul className="org-filing-list">
                 <li><CheckCircle2 size={15} className="gold-text" /> <span>Corporate Income Tax (CIT) Quarterly &amp; Annual Submissions</span></li>
-                <li><CheckCircle2 size={15} className="gold-text" /> <span>Monthly VAT, NHIL, GETFund &amp; COVID Levy Portals</span></li>
+                <li><CheckCircle2 size={15} className="gold-text" /> <span>Monthly VAT, NHIL &amp; GETFund Portals</span></li>
                 <li><CheckCircle2 size={15} className="gold-text" /> <span>Withholding Tax (WHT) Credit Certificate Reconciliation</span></li>
                 <li><CheckCircle2 size={15} className="gold-text" /> <span>E-VAT Certified Invoicing Integration &amp; Audits</span></li>
               </ul>

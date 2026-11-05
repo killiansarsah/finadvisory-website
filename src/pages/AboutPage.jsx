@@ -5,26 +5,7 @@ import {
 import { benefitsList } from '../components/Compliance';
 
 export function AboutPage({ onOpenContact }) {
-  const leadershipTeam = [
-    {
-      name: 'Kofi Mensah, FCA',
-      role: 'Managing Partner — Audit & Assurance',
-      credentials: 'Fellow of ICAG, 18+ Years Experience',
-      bio: 'Former Big 4 audit director specializing in financial institutions, manufacturing conglomerates, and statutory compliance under IFRS in Ghana.'
-    },
-    {
-      name: 'Ama Osei, CA, CTA',
-      role: 'Senior Partner — Tax Advisory & Regulatory',
-      credentials: 'Chartered Accountant & Certified Tax Advisor',
-      bio: 'Leading authority on Ghana Revenue Authority (GRA) tax dispute resolution, corporate transfer pricing, and VAT optimization for multinationals and local SMEs.'
-    },
-    {
-      name: 'Kwabena Darko, CA, MBA',
-      role: 'Partner — Management Consultancy & Corporate Finance',
-      credentials: 'Chartered Accountant, Wharton Executive Scholar',
-      bio: 'Expert in financial restructuring, capital raising advisory, and corporate governance for growing Ghanaian enterprises.'
-    }
-  ];
+  const leadershipTeam = [];
 
   const firmValues = [
     {
@@ -106,10 +87,6 @@ export function AboutPage({ onOpenContact }) {
                 <span>ICAG Accredited Firm</span>
               </div>
               <div className="accred-badge">
-                <ShieldCheck size={18} className="gold-text" />
-                <span>GRA Certified Agents</span>
-              </div>
-              <div className="accred-badge">
                 <BookOpen size={18} className="gold-text" />
                 <span>IFRS &amp; ISA Compliant</span>
               </div>
@@ -150,17 +127,7 @@ export function AboutPage({ onOpenContact }) {
         </div>
 
         <div className="leadership-grid">
-          {leadershipTeam.map((leader, idx) => (
-            <div key={idx} className="leader-card">
-              <div className="leader-avatar-circle">
-                <span>{leader.name.split(' ').map(n => n[0]).slice(0, 2).join('')}</span>
-              </div>
-              <h3 className="leader-name">{leader.name}</h3>
-              <span className="leader-role">{leader.role}</span>
-              <span className="leader-cred">{leader.credentials}</span>
-              <p className="leader-bio">{leader.bio}</p>
-            </div>
-          ))}
+          {/* Partner profiles kept blank for now as requested */}
         </div>
       </section>
 
