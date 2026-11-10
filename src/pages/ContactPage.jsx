@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import {
-  Phone, Mail, MapPin, Clock, Send, CheckCircle2, ShieldCheck, Building2
+  Phone, Mail, MapPin, Clock, Send, CheckCircle2, ShieldCheck, Building2, AlertCircle
 } from 'lucide-react';
 import { servicesData } from '../components/Services';
+import { submitInquiry } from '../services/formService';
 
 export function ContactPage() {
   const [formData, setFormData] = useState({
@@ -17,14 +18,21 @@ export function ContactPage() {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+    setSubmitError(null);
+    try {
+      await submitInquiry(formData, 'Contact Page Consultation Inquiry');
       setIsSubmitted(true);
-    }, 600);
+    } catch (err) {
+      console.error('Submission error:', err);
+      setSubmitError(err.message || 'Unable to submit your request. Please email info@finadvisorycc.com directly.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e) => {
@@ -142,17 +150,18 @@ export function ContactPage() {
               {isSubmitted ? (
                 <div className="submission-success-state" role="status">
                   <CheckCircle2 size={54} className="success-icon" />
-                  <h4>Inquiry Successfully Received</h4>
+                  <h4>Inquiry Received Successfully</h4>
                   <p>
-                    Thank you, <strong>{formData.fullName}</strong>. A FinAdvisory Chartered Accountant
-                    has received your message regarding <strong>{formData.serviceInterest}</strong> and
-                    will reach out directly via {formData.phone || formData.email}.
+                    Thank you, <strong>{formData.fullName}</strong>. A Senior Partner / Officer at FinAdvisory Chartered Accountants
+                    will review your request regarding <strong>{formData.serviceInterest}</strong> and
+                    contact you promptly via {formData.phone || formData.email}.
                   </p>
                   <button
                     type="button"
                     className="gold-btn small-btn"
                     onClick={() => {
                       setIsSubmitted(false);
+                      setSubmitError(null);
                       setFormData({
                         fullName: '',
                         companyName: '',
@@ -168,7 +177,13 @@ export function ContactPage() {
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="inquiry-form" noValidate>
+                <form onSubmit={handleSubmit} className="inquiry-form">
+                  {submitError && (
+                    <div className="form-error-banner" style={{ background: '#fef2f2', border: '1px solid #f87171', color: '#991b1b', padding: '10px 14px', borderRadius: '6px', marginBottom: '14px', fontSize: '0.88rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <AlertCircle size={18} />
+                      <span>{submitError}</span>
+                    </div>
+                  )}
                   <div className="form-row-2">
                     <div className="form-group">
                       <label htmlFor="fullName" className="form-label">

@@ -6,6 +6,7 @@ export function ConsultationModal({ isOpen, onClose, initialService }) {
   if (!isOpen) return null;
 
   const isCompliance = initialService?.toLowerCase().includes('compliance');
+  const isProposal = initialService?.toLowerCase().includes('proposal') || initialService?.toLowerCase().includes('custom');
 
   return (
     <div
@@ -27,16 +28,20 @@ export function ConsultationModal({ isOpen, onClose, initialService }) {
 
         <div className="modal-header">
           <span className="section-kicker">
-            {isCompliance ? 'STATUTORY COMPLIANCE' : 'ADVISORY INQUIRY'}
+            {isCompliance ? 'STATUTORY COMPLIANCE' : isProposal ? 'CUSTOM PROPOSAL' : 'ADVISORY INQUIRY'}
           </span>
           <h2 id="consultation-modal-title" className="modal-title">
             {isCompliance
               ? 'Request a Compliance Assessment'
+              : isProposal
+              ? 'Request a Custom Service Proposal'
               : 'Book an Advisory Consultation'}
           </h2>
           <p className="modal-subtitle">
             {isCompliance
               ? 'Receive a comprehensive audit and statutory filing evaluation from certified chartered accountants in Accra, Ghana.'
+              : isProposal
+              ? 'Tell us your corporate requirements to receive a tailored accounting, tax, or payroll retainer proposal.'
               : 'Connect directly with a senior partner at FinAdvisory Chartered Accountants in Accra, Ghana.'}
           </p>
         </div>

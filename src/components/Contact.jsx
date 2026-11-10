@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {
-  MessageCircle, Phone, Mail, MapPin, Send, CheckCircle2, Clock, ShieldCheck
+  MessageCircle, Phone, Mail, MapPin, Send, CheckCircle2, Clock, ShieldCheck, AlertCircle
 } from 'lucide-react';
 import { servicesData } from './Services';
+import { submitInquiry } from '../services/formService';
 
 export function Contact({ prefilledService = '', isModal = false, onClose }) {
   const [formData, setFormData] = useState({
@@ -16,6 +17,7 @@ export function Contact({ prefilledService = '', isModal = false, onClose }) {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
 
   useEffect(() => {
     if (prefilledService) {
@@ -23,14 +25,19 @@ export function Contact({ prefilledService = '', isModal = false, onClose }) {
     }
   }, [prefilledService]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate brief network submission
-    setTimeout(() => {
-      setIsSubmitting(false);
+    setSubmitError(null);
+    try {
+      await submitInquiry(formData, isModal ? 'Consultation / Proposal Request' : 'Consultation Inquiry');
       setIsSubmitted(true);
-    }, 600);
+    } catch (err) {
+      console.error('Error submitting form:', err);
+      setSubmitError(err.message || 'Unable to submit your request. Please email info@finadvisorycc.com directly.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e) => {
@@ -46,7 +53,7 @@ export function Contact({ prefilledService = '', isModal = false, onClose }) {
             <CheckCircle2 size={52} className="success-icon" />
             <h4>Inquiry Received Successfully</h4>
             <p>
-              Thank you, <strong>{formData.fullName}</strong>. A FinAdvisory Chartered Accountant
+              Thank you, <strong>{formData.fullName}</strong>. A Senior Partner / Officer at FinAdvisory Chartered Accountants
               will review your request regarding <strong>{formData.serviceInterest}</strong> and
               contact you promptly via {formData.phone || formData.email}.
             </p>
@@ -55,6 +62,7 @@ export function Contact({ prefilledService = '', isModal = false, onClose }) {
               className="gold-btn small-btn"
               onClick={() => {
                 setIsSubmitted(false);
+                setSubmitError(null);
                 setFormData({
                   fullName: '',
                   companyName: '',
@@ -70,7 +78,13 @@ export function Contact({ prefilledService = '', isModal = false, onClose }) {
             </button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="inquiry-form modal-inquiry-form" noValidate>
+          <form onSubmit={handleSubmit} className="inquiry-form modal-inquiry-form">
+            {submitError && (
+              <div className="form-error-banner" style={{ background: '#fef2f2', border: '1px solid #f87171', color: '#991b1b', padding: '10px 14px', borderRadius: '6px', marginBottom: '14px', fontSize: '0.88rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <AlertCircle size={18} />
+                <span>{submitError}</span>
+              </div>
+            )}
             <div className="form-row-2">
               <div className="form-group">
                 <label htmlFor="modal-fullName" className="form-label">
@@ -149,6 +163,7 @@ export function Contact({ prefilledService = '', isModal = false, onClose }) {
                 className="form-select"
               >
                 <option value="Regulatory & Statutory Compliance">Regulatory &amp; Statutory Compliance Assessment</option>
+                <option value="Custom Advisory Package">Custom Service Package / Proposal</option>
                 <option value="GRA Corporate Tax & VAT Compliance">GRA Corporate Tax &amp; VAT Compliance</option>
                 <option value="Registrar-General (RGD) Annual Returns">Registrar-General (RGD) Annual Returns</option>
                 <option value="Audit & Assurance">Audit &amp; Assurance</option>
@@ -291,17 +306,18 @@ export function Contact({ prefilledService = '', isModal = false, onClose }) {
             {isSubmitted ? (
               <div className="submission-success-state" role="status">
                 <CheckCircle2 size={54} className="success-icon" />
-                <h4>Inquiry Received</h4>
+                <h4>Inquiry Received Successfully</h4>
                 <p>
-                  Thank you, <strong>{formData.fullName}</strong>. A FinAdvisory Chartered Accountant
+                  Thank you, <strong>{formData.fullName}</strong>. A Senior Partner / Officer at FinAdvisory Chartered Accountants
                   will review your request regarding <strong>{formData.serviceInterest}</strong> and
-                  contact you shortly via {formData.phone || formData.email}.
+                  contact you promptly via {formData.phone || formData.email}.
                 </p>
                 <button
                   type="button"
                   className="gold-btn small-btn"
                   onClick={() => {
                     setIsSubmitted(false);
+                    setSubmitError(null);
                     setFormData({
                       fullName: '',
                       companyName: '',
@@ -317,7 +333,13 @@ export function Contact({ prefilledService = '', isModal = false, onClose }) {
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="inquiry-form" noValidate>
+              <form onSubmit={handleSubmit} className="inquiry-form">
+                {submitError && (
+                  <div className="form-error-banner" style={{ background: '#fef2f2', border: '1px solid #f87171', color: '#991b1b', padding: '10px 14px', borderRadius: '6px', marginBottom: '14px', fontSize: '0.88rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <AlertCircle size={18} />
+                    <span>{submitError}</span>
+                  </div>
+                )}
                 <div className="form-row-2">
                   <div className="form-group">
                     <label htmlFor="fullName" className="form-label">
