@@ -62,7 +62,11 @@ $submissionDate = date('D, d M Y H:i:s') . ' GMT';
 // -------------------------------------------------------------
 // 1. Executive HTML Email for Partners (info@finadvisorycc.com)
 // -------------------------------------------------------------
-$partnerSubject = "[FinAdvisory Website] {$formTitle}: {$serviceInterest} - {$fullName}";
+$isProposal = stripos($formTitle, 'proposal') !== false || stripos($serviceInterest, 'proposal') !== false || stripos($serviceInterest, 'custom') !== false;
+$requestType = $isProposal ? 'Custom Proposal Request' : 'Consultation Request';
+$companySuffix = (!empty($companyName) && $companyName !== 'Not specified' && $companyName !== 'N/A') ? " ({$companyName})" : '';
+
+$partnerSubject = "{$requestType}: {$serviceInterest} – {$fullName}{$companySuffix}";
 
 $partnerHtml = "
 <!DOCTYPE html>
@@ -90,7 +94,7 @@ $partnerHtml = "
 <body>
   <div class='email-container'>
     <div class='header-banner'>
-      <p>NEW WEBSITE INQUIRY</p>
+      <p>{$requestType}</p>
       <h1>FinAdvisory Chartered Accountants</h1>
     </div>
     <div class='content-area'>

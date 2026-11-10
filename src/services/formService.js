@@ -8,6 +8,15 @@ const FORMSUBMIT_ENDPOINT = import.meta.env.VITE_FORMSUBMIT_TOKEN || '0ce7dd0ae8
 const TARGET_EMAIL = import.meta.env.VITE_CONTACT_EMAIL || 'info@finadvisorycc.com';
 
 export async function submitInquiry(formData, formTitle = 'Consultation Inquiry') {
+  // Generate clean, executive subject line matching industry standards:
+  // e.g. "Consultation Request: Audit & Assurance – Kwame Mensah (GoldCoast Ventures Ltd)"
+  const isProposal = formTitle?.toLowerCase().includes('proposal') || formData.serviceInterest?.toLowerCase().includes('custom');
+  const requestType = isProposal ? 'Custom Proposal Request' : 'Consultation Request';
+  const companySuffix = formData.companyName && formData.companyName.trim() && formData.companyName !== 'Not specified' && formData.companyName !== 'N/A'
+    ? ` (${formData.companyName.trim()})`
+    : '';
+  const executiveSubject = `${requestType}: ${formData.serviceInterest || 'General Advisory'} – ${formData.fullName}${companySuffix}`;
+
   // 1. Primary Strategy: Native Hostinger PHP Endpoint (/api/contact.php)
   // Sends genuine @finadvisorycc.com emails with custom Navy & Gold branded HTML
   try {
@@ -52,8 +61,8 @@ export async function submitInquiry(formData, formTitle = 'Consultation Inquiry'
       },
       body: JSON.stringify({
         access_key: web3FormsKey,
-        subject: `[FinAdvisory Website] ${formTitle}: ${formData.serviceInterest || 'General'} - ${formData.fullName}`,
-        from_name: 'FinAdvisory Website',
+        subject: executiveSubject,
+        from_name: 'FinAdvisory Practice Portal',
         to_email: TARGET_EMAIL,
         name: formData.fullName,
         email: formData.email,
@@ -80,7 +89,7 @@ export async function submitInquiry(formData, formTitle = 'Consultation Inquiry'
       Accept: 'application/json'
     },
     body: JSON.stringify({
-      _subject: `New Website Inquiry: ${formTitle} - ${formData.serviceInterest || 'General'} (${formData.fullName})`,
+      _subject: executiveSubject,
       _replyto: formData.email,
       _template: 'table',
       _captcha: 'false',
