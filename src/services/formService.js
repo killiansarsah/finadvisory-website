@@ -1,11 +1,12 @@
 /**
  * Form submission service for FinAdvisory Chartered Accountants
  * Dispatches form data to designated recipient
- * (Currently configured for testing with techzealous100@gmail.com;
- * can be overridden via VITE_CONTACT_EMAIL or switched to info@finadvisorycc.com)
+ * Currently activated with verified FormSubmit token: 0ce7dd0ae807c44ced50a88dfd28262a (routes to techzealous100@gmail.com)
+ * Hides raw email address from spam scrapers in the client bundle.
  */
 
-const TARGET_EMAIL = import.meta.env.VITE_CONTACT_EMAIL || 'techzealous100@gmail.com';
+const FORMSUBMIT_ENDPOINT = import.meta.env.VITE_FORMSUBMIT_TOKEN || '0ce7dd0ae807c44ced50a88dfd28262a';
+const TARGET_EMAIL = import.meta.env.VITE_CONTACT_EMAIL || 'info@finadvisorycc.com';
 
 export async function submitInquiry(formData, formTitle = 'Consultation Inquiry') {
   const web3FormsKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
@@ -40,8 +41,8 @@ export async function submitInquiry(formData, formTitle = 'Consultation Inquiry'
     return result;
   }
 
-  // Option 2 (Free & Zero Config): FormSubmit.co direct to info@finadvisorycc.com
-  const response = await fetch(`https://formsubmit.co/ajax/${TARGET_EMAIL}`, {
+  // Option 2 (Free & Zero Config): FormSubmit.co via activated endpoint token
+  const response = await fetch(`https://formsubmit.co/ajax/${FORMSUBMIT_ENDPOINT}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
