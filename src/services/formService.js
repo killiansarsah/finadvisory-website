@@ -1,9 +1,11 @@
-﻿/**
+/**
  * Form submission service for FinAdvisory Chartered Accountants
- * Dispatches form data directly to info@finadvisorycc.com
+ * Dispatches form data to designated recipient
+ * (Currently configured for testing with techzealous100@gmail.com;
+ * can be overridden via VITE_CONTACT_EMAIL or switched to info@finadvisorycc.com)
  */
 
-const TARGET_EMAIL = 'info@finadvisorycc.com';
+const TARGET_EMAIL = import.meta.env.VITE_CONTACT_EMAIL || 'techzealous100@gmail.com';
 
 export async function submitInquiry(formData, formTitle = 'Consultation Inquiry') {
   const web3FormsKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
