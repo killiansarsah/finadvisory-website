@@ -1,10 +1,10 @@
 /**
  * Form submission service for FinAdvisory Chartered Accountants
  * Primary: Native Hostinger backend (/api/contact.php) with branded executive HTML
- * Fallback: FormSubmit.co with activated token
+ * Fallback: FormSubmit.co direct to info@finadvisorycc.com
  */
 
-const FORMSUBMIT_ENDPOINT = import.meta.env.VITE_FORMSUBMIT_TOKEN || '0ce7dd0ae807c44ced50a88dfd28262a';
+const FORMSUBMIT_ENDPOINT = import.meta.env.VITE_FORMSUBMIT_TOKEN || 'info@finadvisorycc.com';
 const TARGET_EMAIL = import.meta.env.VITE_CONTACT_EMAIL || 'info@finadvisorycc.com';
 
 export async function submitInquiry(formData, formTitle = 'Consultation Inquiry') {

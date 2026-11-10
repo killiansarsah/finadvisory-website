@@ -53,9 +53,8 @@ if (empty($fullName) || !$email || empty($phone)) {
     exit;
 }
 
-// Recipient email: set to your personal email for testing;
-// can easily be switched back to info@finadvisorycc.com at handover
-$recipientEmail = 'techzealous100@gmail.com';
+// Recipient email: FinAdvisory corporate mailbox
+$recipientEmail = 'info@finadvisorycc.com';
 $fromEmail      = 'info@finadvisorycc.com';
 $submissionDate = date('D, d M Y H:i:s') . ' GMT';
 
